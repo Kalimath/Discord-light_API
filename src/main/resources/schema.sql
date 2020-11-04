@@ -5,12 +5,14 @@ CREATE TABLE GEBRUIKER
     ACHTERNAAM varchar(300) not null
 );
 
+
 CREATE TABLE KANAAL
 (
     ID integer auto_increment,
     NAME varchar(300) not null,
     TOPIC varchar(300) not null,
 );
+
 
 CREATE TABLE BERICHT
 (
