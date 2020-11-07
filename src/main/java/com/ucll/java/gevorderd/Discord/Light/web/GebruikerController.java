@@ -22,6 +22,12 @@ public class GebruikerController {
         return gebruikerDao.save(gebruiker);
     }
 
+    @GetMapping("/")
+    public List<Gebruiker> getAlleGebruikers(){
+        return gebruikerDao.findAll();
+    }
+
+
 
 
 }
