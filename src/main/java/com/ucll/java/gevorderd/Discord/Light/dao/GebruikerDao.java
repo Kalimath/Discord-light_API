@@ -11,6 +11,6 @@ import java.util.List;
 @Repository("gebruikersRepo")
 public interface GebruikerDao extends JpaRepository<Gebruiker, Long> {
 
-    @Query("SELECT g FROM GEBRUIKER g WHERE g.USERNAME LIKE lower(concat('%', ?1,'%'))")
+    //@Query("SELECT g FROM GEBRUIKER g WHERE g.USERNAME LIKE lower(concat('%', ?1,'%'))")
     List<Gebruiker> findAllByUsernameContains(String username);
 }

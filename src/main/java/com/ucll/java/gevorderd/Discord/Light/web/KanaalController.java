@@ -16,12 +16,12 @@ public class KanaalController {
         this.kanaalDao = kanaalDao;
     }
 
-    @PostMapping("/")
+    @PostMapping("")
     public Kanaal voegKanaalToe(@RequestBody Kanaal kanaal){
         return kanaalDao.save(kanaal);
     }
 
-    @GetMapping("/")
+    @GetMapping("")
     public List<Kanaal> getAlleKanalen(@RequestParam("topic") String topic){
         return kanaalDao.findAllByTopicContains(topic);
     }

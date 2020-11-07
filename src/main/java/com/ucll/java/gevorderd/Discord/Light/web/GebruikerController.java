@@ -17,14 +17,14 @@ public class GebruikerController {
     }
 
 
-    @PostMapping("/")
+    @PostMapping("")
     public Gebruiker voegGebruikerToe(@RequestBody Gebruiker gebruiker) {
         return gebruikerDao.save(gebruiker);
     }
 
-    @GetMapping("/")
-    public List<Gebruiker> getAlleGebruikers(){
-        return gebruikerDao.findAll();
+    @GetMapping("")
+    public List<Gebruiker> getAlleGebruikers(@RequestParam("username") String username){
+        return gebruikerDao.findAllByUsernameContains(username);
     }
 
 

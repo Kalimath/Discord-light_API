@@ -1,12 +1,12 @@
 package com.ucll.java.gevorderd.Discord.Light.domain;
 
-import javax.persistence.Column;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 
+@Entity
+@Table(name = "GEBRUIKER", schema = "DISCORD_LIGHT")
 public class Gebruiker {
 
+    @Id
     @Column(name = "USERNAME")
     private String username;
 
