@@ -1,5 +1,7 @@
 package com.ucll.java.gevorderd.Discord.Light.domain;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 import javax.persistence.*;
 
 @Entity
@@ -15,6 +17,7 @@ public class Gebruiker {
     private String username;
 
     @Column(name = "VOORNAAM")
+
     private String voornaam;
 
     @Column(name = "ACHTERNAAM")
