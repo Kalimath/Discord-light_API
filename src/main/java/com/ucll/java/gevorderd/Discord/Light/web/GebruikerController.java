@@ -19,6 +19,10 @@ public class GebruikerController {
 
     @PostMapping("")
     public Gebruiker voegGebruikerToe(@RequestBody Gebruiker gebruiker) {
+        Gebruiker gebruiker1 = new Gebruiker();
+        gebruiker1.setUsername("Yeet");
+        gebruiker1.setVoornaam("Arno");
+        gebruiker1.setAchternaam("Barre");
         return gebruikerDao.save(gebruiker);
     }
 
