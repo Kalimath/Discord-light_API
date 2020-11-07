@@ -22,7 +22,7 @@ public class KanaalController {
     }
 
     @GetMapping("/")
-    public List<Kanaal> getAlleKanalen(){
-        return kanaalDao.findAll();
+    public List<Kanaal> getAlleKanalen(@RequestParam("topic") String topic){
+        return kanaalDao.findAllByTopicContains(topic);
     }
 }
