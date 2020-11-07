@@ -6,7 +6,11 @@ import javax.persistence.*;
 @Table(name = "GEBRUIKER", schema = "DISCORD_LIGHT")
 public class Gebruiker {
 
+
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private long id;
+
     @Column(name = "USERNAME")
     private String username;
 

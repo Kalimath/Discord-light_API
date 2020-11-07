@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("kanalen")
+@RequestMapping("/kanalen")
 public class KanaalController {
 
     private final KanaalDao kanaalDao;
