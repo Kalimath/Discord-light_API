@@ -38,4 +38,9 @@ public class KanaalController {
         gebruiker.abonneerOpKanaal(kanaalDao.getOne(kanaalId));
         return gebruikerDao.save(gebruiker);
     }
+
+    @GetMapping("/{kanaalId}/registraties")
+    public List<Gebruiker> getChannelMembers(@PathVariable("kanaalId") long kanaalId){
+        return gebruikerDao.findGebruikersByGeabonneerdeKanalenContains(kanaalDao.getOne(kanaalId));
+    }
 }
