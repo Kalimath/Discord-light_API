@@ -3,6 +3,8 @@ package com.ucll.java.gevorderd.Discord.Light.domain;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 
 import javax.persistence.*;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 @Table(name = "GEBRUIKER", schema = "DISCORD_LIGHT")
@@ -23,6 +25,14 @@ public class Gebruiker {
     @Column(name = "ACHTERNAAM")
     private String achternaam;
 
+    @ManyToMany
+    @JoinTable(
+            schema = "DISCORD_LIGHT",
+            name = "GEBRUIKER_KANAAL",
+            joinColumns = @JoinColumn(name = "GEBRUIKER_ID"),
+            inverseJoinColumns = @JoinColumn(name = "KANAAL_ID")
+    )
+    private Set<Kanaal> geabonneerdeKanalen = new HashSet<>();
 
     public Gebruiker() {
         //
@@ -58,5 +68,9 @@ public class Gebruiker {
 
     public void setAchternaam(String achternaam) {
         this.achternaam = achternaam;
+    }
+
+    public void abonneerOpKanaal(Kanaal kanaal) {
+        geabonneerdeKanalen.add(kanaal);
     }
 }

@@ -1,6 +1,8 @@
 package com.ucll.java.gevorderd.Discord.Light.domain;
 
 import javax.persistence.*;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 @Table(name = "KANAAL", schema = "DISCORD_LIGHT")
@@ -15,6 +17,8 @@ public class Kanaal {
 
     @Column(name = "TOPIC")
     private String topic;
+
+
 
     public Kanaal() {
     }
