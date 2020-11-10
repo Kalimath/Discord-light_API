@@ -20,10 +20,10 @@ CREATE TABLE DISCORD_LIGHT.KANAAL
 
 CREATE TABLE DISCORD_LIGHT.BERICHT
 (
-    ID bigint serial primary key,
-    USERNAME varchar(300) not null ,
-    VOORNAAM varchar(300) not null ,
-    ACHTERNAAM varchar(300) not null
+    BERICHT_ID bigint serial primary key,
+    AFZENDER_ID bigint not null ,
+    BERICHT varchar(2000) not null ,
+    VERZENDDATUM DATETIME AUTO_INCREMENT
 );
 
 CREATE TABLE DISCORD_LIGHT.GEBRUIKER_KANAAL

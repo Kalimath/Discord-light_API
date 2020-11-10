@@ -3,7 +3,9 @@ package com.ucll.java.gevorderd.Discord.Light.domain;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -34,8 +36,12 @@ public class Gebruiker {
     )
     private Set<Kanaal> geabonneerdeKanalen = new HashSet<>();
 
+    @OneToMany
+    @JoinColumn(name = "DISCORD_LIGHT.BERICHT_ID")
+    private List<Bericht> berichten;
+
     public Gebruiker() {
-        //
+        setBerichten(new ArrayList<>());
     }
 
     public long getId() {
@@ -72,5 +78,18 @@ public class Gebruiker {
 
     public void abonneerOpKanaal(Kanaal kanaal) {
         geabonneerdeKanalen.add(kanaal);
+    }
+
+    public List<Bericht> getBerichten() {
+        return berichten;
+    }
+
+    public void setBerichten(List<Bericht> berichten) {
+        this.berichten = berichten;
+    }
+
+    public void plaatsBericht(Bericht bericht){
+        if (berichten == null) berichten = new ArrayList<>();
+        berichten.add(bericht);
     }
 }
