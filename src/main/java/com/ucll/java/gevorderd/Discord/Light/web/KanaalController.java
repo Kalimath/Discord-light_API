@@ -6,10 +6,12 @@ import com.ucll.java.gevorderd.Discord.Light.dao.KanaalDao;
 import com.ucll.java.gevorderd.Discord.Light.domain.Bericht;
 import com.ucll.java.gevorderd.Discord.Light.domain.Gebruiker;
 import com.ucll.java.gevorderd.Discord.Light.domain.Kanaal;
+import com.ucll.java.gevorderd.Discord.Light.dto.KanaalDto;
 import com.ucll.java.gevorderd.Discord.Light.dto.PlaatsBerichtDto;
 import org.springframework.web.bind.annotation.*;
 
 import javax.transaction.Transactional;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -28,13 +30,19 @@ public class KanaalController {
     }
 
     @PostMapping("")
-    public Kanaal voegKanaalToe(@RequestBody Kanaal kanaal){
-        return kanaalDao.save(kanaal);
+    public KanaalDto voegKanaalToe(@RequestBody Kanaal kanaal){
+        Kanaal temp = kanaalDao.save(kanaal);
+        return new KanaalDto(temp.getId(), temp.getName(), temp.getTopic());
     }
 
     @GetMapping("")
-    public List<Kanaal> getAlleKanalen(@RequestParam("topic") String topic){
-        return kanaalDao.findAllByTopicContains(topic);
+    public List<KanaalDto> getAlleKanalen(@RequestParam("topic") String topic){
+        List<Kanaal> kanalen = kanaalDao.findAllByTopicContains(topic);
+        List<KanaalDto> res = new ArrayList<>();
+        for (Kanaal temp: kanalen) {
+            res.add(new KanaalDto(temp.getId(), temp.getName(), temp.getTopic()));
+        }
+        return res;
     }
 
     @Transactional
