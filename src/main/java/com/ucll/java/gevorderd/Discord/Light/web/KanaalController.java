@@ -6,10 +6,12 @@ import com.ucll.java.gevorderd.Discord.Light.dao.KanaalDao;
 import com.ucll.java.gevorderd.Discord.Light.domain.Bericht;
 import com.ucll.java.gevorderd.Discord.Light.domain.Gebruiker;
 import com.ucll.java.gevorderd.Discord.Light.domain.Kanaal;
+import com.ucll.java.gevorderd.Discord.Light.dto.PlaatsBerichtDto;
 import org.springframework.web.bind.annotation.*;
 
 import javax.transaction.Transactional;
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/kanalen")
@@ -49,12 +51,10 @@ public class KanaalController {
     }
 
     @PostMapping("/{id}/berichten")
-    public Bericht plaatsBerichtInKanaal(@PathVariable("id") long kanaalId,
-                                         @RequestParam(value = "afzender") long afzender,
-                                         @RequestParam(value = "bericht") String bericht){
+    public Bericht plaatsBerichtInKanaal(@PathVariable("id") long kanaalId, @RequestBody PlaatsBerichtDto berichtDto){
         Bericht newBericht = new Bericht();
-        newBericht.setBericht(bericht);
-        newBericht.setAfzender(gebruikerDao.getOne(afzender));
+        newBericht.setBericht(berichtDto.getBericht());
+        newBericht.setAfzender(gebruikerDao.getOne(berichtDto.getAfzender()));
         kanaalDao.getOne(kanaalId).plaatsBericht(newBericht);
         return berichtDao.save(newBericht);
     }
