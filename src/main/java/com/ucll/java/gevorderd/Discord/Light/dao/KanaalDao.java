@@ -1,5 +1,6 @@
 package com.ucll.java.gevorderd.Discord.Light.dao;
 
+import com.ucll.java.gevorderd.Discord.Light.domain.Bericht;
 import com.ucll.java.gevorderd.Discord.Light.domain.Gebruiker;
 import com.ucll.java.gevorderd.Discord.Light.domain.Kanaal;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -14,5 +15,7 @@ import java.util.List;
 public interface KanaalDao extends JpaRepository<Kanaal, Long> {
 
     List<Kanaal> findAllByTopicContains(String topic);
+
+    List<Bericht> findAllByIdIsAndBerichtenAAndBerichten_AndBerichten_Afzender_usernameContains()
 
 }

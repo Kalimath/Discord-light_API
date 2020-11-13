@@ -82,6 +82,27 @@ public class DtoService {
         return toBerichtDto(berichtDao.save(newBericht));
     }
 
+    public List<FullBerichtDto> getAllMessagesFromUser(long id) {
+        List<Bericht> berichten = berichtDao.findBerichtsByOntvanger_Id(id);
+        List<FullBerichtDto> newBerichten = new ArrayList<>();
+        for (Bericht b: berichten) {
+            newBerichten.add(toFullBerichtDto(b));
+        }
+        return newBerichten;
+    }
+
+    public List<FullBerichtDto> getAllMessagesFromChannel(long id, String username, String bericht) {
+        if(username==null||username.trim().isEmpty()) username = "";
+        if(bericht==null||bericht.trim().isEmpty()) bericht = "";
+        List<Bericht> berichten = berichtDao.findAllByIdIsAndAfzender_UsernameContainsAndBerichtContains(id, username, bericht);
+        List<FullBerichtDto> newBerichten = new ArrayList<>();
+        for (Bericht b: berichten) {
+            newBerichten.add(toFullBerichtDto(b));
+        }
+        return newBerichten;
+    }
+
+
     public GebruikerDto toGebruikerDto(Gebruiker gebruiker){
         return new GebruikerDto(gebruiker.getId(), gebruiker.getUsername(), gebruiker.getVoornaam(), gebruiker.getAchternaam());
     }
@@ -115,6 +136,9 @@ public class DtoService {
     }
 
     public FullBerichtDto toFullBerichtDto (Bericht b){
-        return new FullBerichtDto(toGebruikerDto(b.getAfzender()), b.getBericht(), b.getVerzendDatum());
+        return new FullBerichtDto(b.getId(), toGebruikerDto(b.getAfzender()), b.getBericht(), b.getVerzendDatum());
     }
+
+
+
 }

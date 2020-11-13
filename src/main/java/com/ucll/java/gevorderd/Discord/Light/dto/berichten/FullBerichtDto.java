@@ -8,12 +8,12 @@ public class FullBerichtDto {
     private long id;
     private GebruikerDto afzender;
     private String bericht;
-    private LocalDateTime dateTime;
+    private LocalDateTime verzendDatum;
 
-    public FullBerichtDto(GebruikerDto afzender, String bericht, LocalDateTime dateTime) {
+    public FullBerichtDto(long id, GebruikerDto afzender, String bericht, LocalDateTime dateTime) {
         setId(id);
         setBericht(bericht);
-        setDateTime(dateTime);
+        setVerzendDatum(dateTime);
         setAfzender(afzender);
     }
 
@@ -41,11 +41,11 @@ public class FullBerichtDto {
         this.bericht = bericht;
     }
 
-    public LocalDateTime getDateTime() {
-        return dateTime;
+    public LocalDateTime getVerzendDatum() {
+        return verzendDatum;
     }
 
-    public void setDateTime(LocalDateTime dateTime) {
-        this.dateTime = dateTime;
+    public void setVerzendDatum(LocalDateTime verzendDatum) {
+        this.verzendDatum = verzendDatum;
     }
 }

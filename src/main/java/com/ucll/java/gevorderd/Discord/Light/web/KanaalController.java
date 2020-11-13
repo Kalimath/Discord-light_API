@@ -8,6 +8,7 @@ import com.ucll.java.gevorderd.Discord.Light.dto.BerichtDto;
 import com.ucll.java.gevorderd.Discord.Light.dto.GebruikerDto;
 import com.ucll.java.gevorderd.Discord.Light.dto.KanaalDto;
 import com.ucll.java.gevorderd.Discord.Light.dto.PlaatsBerichtDto;
+import com.ucll.java.gevorderd.Discord.Light.dto.berichten.FullBerichtDto;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -63,5 +64,10 @@ public class KanaalController {
         }else{
             return error;
         }
+    }
+
+    @GetMapping("/{id}/berichten")
+    public List<FullBerichtDto> getAlleBerichtenOpKanaal(@PathVariable("id") long id, @RequestParam(value = "username", required = false) String username, @RequestParam(value ="bericht", required = false) String bericht){
+        return dtoService.getAllMessagesFromChannel(id, username, bericht);
     }
 }

@@ -4,6 +4,12 @@ import com.ucll.java.gevorderd.Discord.Light.domain.Bericht;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
+
 @Repository("berichtenRepo")
 public interface BerichtDao extends JpaRepository<Bericht, Long> {
+
+    List<Bericht> findBerichtsByOntvanger_Id(long id);
+
+    List<Bericht> findAllByIdIsAndAfzender_UsernameContainsAndBerichtContains(long id, String username, String bericht);
 }
