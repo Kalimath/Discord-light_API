@@ -1,6 +1,7 @@
 package com.ucll.java.gevorderd.Discord.Light.domain;
 
 import javax.persistence.*;
+import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "BERICHT", schema = "DISCORD_LIGHT")
@@ -14,15 +15,11 @@ public class Bericht {
     @JoinColumn(name = "AFZENDER_ID")
     private Gebruiker afzender;
 
-    /*@Column(name = "AFZENDER", insertable = false, updatable = false)
-    private Long afzender;*/
-
-//    @ManyToOne(cascade = {CascadeType.PERSIST})
-//    @JoinColumn(name = "ONTVANGER.ID")
-//    private Gebruiker ontvanger;
-
     @Column(name = "BERICHT")
     private String bericht;
+
+    @Column(name = "VERZENDDATUM")
+    private LocalDateTime verzendDatum;
 
 
 
@@ -30,7 +27,13 @@ public class Bericht {
         //
     }
 
+    public Bericht(Gebruiker afzender, String bericht, LocalDateTime verzendDatum) {
 
+        this.id = id;
+        this.afzender = afzender;
+        this.bericht = bericht;
+        this.verzendDatum = verzendDatum;
+    }
 
     public long getId() {
         return id;
@@ -62,6 +65,14 @@ public class Bericht {
 
     public void setBericht(String bericht) {
         this.bericht = bericht;
+    }
+
+    public LocalDateTime getVerzendDatum() {
+        return verzendDatum;
+    }
+
+    public void setVerzendDatum(LocalDateTime verzendDatum) {
+        this.verzendDatum = verzendDatum;
     }
 }
 

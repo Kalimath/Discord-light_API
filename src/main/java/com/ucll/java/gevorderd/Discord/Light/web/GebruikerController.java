@@ -1,5 +1,6 @@
 package com.ucll.java.gevorderd.Discord.Light.web;
 
+import com.ucll.java.gevorderd.Discord.Light.dao.DtoService;
 import com.ucll.java.gevorderd.Discord.Light.dao.GebruikerDao;
 import com.ucll.java.gevorderd.Discord.Light.dao.KanaalDao;
 import com.ucll.java.gevorderd.Discord.Light.domain.Gebruiker;
@@ -16,29 +17,21 @@ import java.util.Optional;
 @RestController
 public class GebruikerController {
 
-    private final KanaalDao kanaalDao;
-    private final GebruikerDao gebruikerDao;
+    private DtoService dtoService;
 
-    public GebruikerController(KanaalDao kanaalDao, GebruikerDao gebruikerDao) {
-        this.kanaalDao = kanaalDao;
-        this.gebruikerDao = gebruikerDao;
+    public GebruikerController(DtoService dtoService) {
+        this.dtoService = dtoService;
     }
 
 
     @PostMapping("")
     public GebruikerDto voegGebruikerToe(@RequestBody Gebruiker gebruiker) {
-        Gebruiker temp = gebruikerDao.save(gebruiker);
-        return new GebruikerDto(temp.getId(), temp.getUsername(), temp.getVoornaam(), temp.getAchternaam());
+        return dtoService.addGebruiker(gebruiker);
     }
 
     @GetMapping("")
     public List<GebruikerDto> getAlleGebruikers(@RequestParam("username") String username){
-        List<Gebruiker> gebruikers =  gebruikerDao.findAllByUsernameContains(username);
-        List<GebruikerDto> res = new ArrayList<>();
-        for (Gebruiker g : gebruikers) {
-            res.add(new GebruikerDto(g.getId(), g.getUsername(), g.getVoornaam(),g.getAchternaam()));
-        }
-        return res;
+        return dtoService.getAllGebruikers(username);
     }
 
 

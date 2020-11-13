@@ -1,11 +1,19 @@
 package com.ucll.java.gevorderd.Discord.Light.dto;
 
+import com.ucll.java.gevorderd.Discord.Light.domain.Gebruiker;
+
 import java.time.LocalDateTime;
 
-public class PlaatsBerichtDto {
+public class BerichtDto {
     private long afzender;
     private String bericht;
     private LocalDateTime dateTime;
+
+    public BerichtDto(long afzender, String bericht, LocalDateTime dateTime) {
+        setAfzender(afzender);
+        setBericht(bericht);
+        setDateTime(dateTime);
+    }
 
     public long getAfzender() {
         return afzender;
@@ -28,10 +36,6 @@ public class PlaatsBerichtDto {
     }
 
     public void setDateTime(LocalDateTime dateTime) {
-        if(dateTime == null){
-            dateTime = LocalDateTime.now();
-        }else{
             this.dateTime = dateTime;
-        }
     }
 }
