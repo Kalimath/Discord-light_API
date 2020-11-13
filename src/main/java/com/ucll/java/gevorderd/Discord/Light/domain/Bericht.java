@@ -15,6 +15,10 @@ public class Bericht {
     @JoinColumn(name = "AFZENDER_ID")
     private Gebruiker afzender;
 
+    @ManyToOne(cascade = {CascadeType.PERSIST})
+    @JoinColumn(name = "ONTVANGER_ID")
+    private Gebruiker ontvanger;
+
     @Column(name = "BERICHT")
     private String bericht;
 
@@ -27,10 +31,11 @@ public class Bericht {
         //
     }
 
-    public Bericht(Gebruiker afzender, String bericht, LocalDateTime verzendDatum) {
+    public Bericht(Gebruiker afzender,Gebruiker ontvanger, String bericht, LocalDateTime verzendDatum) {
 
         this.id = id;
         this.afzender = afzender;
+        this.ontvanger = ontvanger;
         this.bericht = bericht;
         this.verzendDatum = verzendDatum;
     }
@@ -43,9 +48,9 @@ public class Bericht {
         return afzender;
     }
 
-    /*public Gebruiker getOntvanger() {
+    public Gebruiker getOntvanger() {
         return ontvanger;
-    }*/
+    }
 
     public String getBericht() {
         return bericht;
@@ -59,9 +64,9 @@ public class Bericht {
         this.afzender = afzender;
     }
 
-    /*public void setOntvanger(Gebruiker ontvanger) {
+    public void setOntvanger(Gebruiker ontvanger) {
         this.ontvanger = ontvanger;
-    }*/
+    }
 
     public void setBericht(String bericht) {
         this.bericht = bericht;

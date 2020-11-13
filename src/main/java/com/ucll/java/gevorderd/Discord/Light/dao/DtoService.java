@@ -14,6 +14,7 @@ import org.springframework.stereotype.Component;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Component
 public class DtoService {
@@ -63,10 +64,21 @@ public class DtoService {
         return gebruikerDao.findGebruikersByGeabonneerdeKanalenContains(kanaalDao.getOne(kanaalId));
     }
 
-    public BerichtDto postMessageInChannel( long kanaalId, PlaatsBerichtDto berichtDto){
-        Bericht newBericht = toBericht(berichtDto);
+    public BerichtDto postMessageInChannel(long kanaalId, PlaatsBerichtDto berichtDto){
+        Kanaal kanaal = kanaalDao.getOne(kanaalId);
+
+        Bericht newBericht = toBerichtKanaal(berichtDto);
+        if(newBericht.getAfzender() != gebruikerDao.findGebruikerByGeabonneerdeKanalenContainsAndIdIs(kanaal, newBericht.getAfzender().getId())){
+            throw new NotRegisteredException("Abonneer eerst op het kanaal");
+        }
         newBericht.setVerzendDatum(LocalDateTime.now());
-        kanaalDao.getOne(kanaalId).plaatsBericht(newBericht);
+        kanaal.plaatsBericht(newBericht);
+        return toBerichtDto(berichtDao.save(newBericht));
+    }
+
+    public BerichtDto sendMessageToUser( long ontvangerId, PlaatsBerichtDto berichtDto){
+        Bericht newBericht = toBerichtPrive(berichtDto, ontvangerId);
+        newBericht.setVerzendDatum(LocalDateTime.now());
         return toBerichtDto(berichtDao.save(newBericht));
     }
 
@@ -86,10 +98,16 @@ public class DtoService {
         return result;
     }
 
-    public Bericht toBericht(PlaatsBerichtDto berichtDto){
+    public Bericht toBerichtPrive(PlaatsBerichtDto berichtDto, long ontvangerId){
         return new Bericht(gebruikerDao.getOne(berichtDto.getAfzender()),
+                           gebruikerDao.getOne(ontvangerId),
                             berichtDto.getBericht(),
                             berichtDto.getDateTime());
+    }
+
+    public Bericht toBerichtKanaal(PlaatsBerichtDto berichtDto){
+        return new Bericht(gebruikerDao.getOne(berichtDto.getAfzender()),
+                null, berichtDto.getBericht(), berichtDto.getDateTime());
     }
 
     public BerichtDto toBerichtDto (Bericht b){

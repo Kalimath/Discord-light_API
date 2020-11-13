@@ -22,6 +22,7 @@ CREATE TABLE DISCORD_LIGHT.BERICHT
 (
     BERICHT_ID bigint serial primary key,
     AFZENDER_ID bigint not null ,
+    ONTVANGER_ID bigint ,
     BERICHT varchar(2000) not null ,
     VERZENDDATUM DATETIME AUTO_INCREMENT
 );

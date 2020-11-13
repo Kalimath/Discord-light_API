@@ -1,9 +1,6 @@
 package com.ucll.java.gevorderd.Discord.Light.web;
 
-import com.ucll.java.gevorderd.Discord.Light.dao.BerichtDao;
-import com.ucll.java.gevorderd.Discord.Light.dao.DtoService;
-import com.ucll.java.gevorderd.Discord.Light.dao.GebruikerDao;
-import com.ucll.java.gevorderd.Discord.Light.dao.KanaalDao;
+import com.ucll.java.gevorderd.Discord.Light.dao.*;
 import com.ucll.java.gevorderd.Discord.Light.domain.Bericht;
 import com.ucll.java.gevorderd.Discord.Light.domain.Gebruiker;
 import com.ucll.java.gevorderd.Discord.Light.domain.Kanaal;
@@ -11,6 +8,7 @@ import com.ucll.java.gevorderd.Discord.Light.dto.BerichtDto;
 import com.ucll.java.gevorderd.Discord.Light.dto.GebruikerDto;
 import com.ucll.java.gevorderd.Discord.Light.dto.KanaalDto;
 import com.ucll.java.gevorderd.Discord.Light.dto.PlaatsBerichtDto;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.transaction.Transactional;
@@ -50,7 +48,20 @@ public class KanaalController {
     }
 
     @PostMapping("/{id}/berichten")
-    public BerichtDto plaatsBerichtInKanaal(@PathVariable("id") long kanaalId, @RequestBody PlaatsBerichtDto berichtDto){
-        return dtoService.postMessageInChannel(kanaalId, berichtDto);
+    public Object plaatsBerichtInKanaal(@PathVariable("id") long kanaalId, @RequestBody PlaatsBerichtDto berichtDto){
+        BerichtDto entity = null;
+        String error = "";
+        boolean errorFree = true;
+        try {
+           entity = dtoService.postMessageInChannel(kanaalId, berichtDto);
+        }catch (NotRegisteredException e){
+            errorFree = false;
+            error = e.getMessage();
+        }
+        if(errorFree){
+            return entity;
+        }else{
+            return error;
+        }
     }
 }

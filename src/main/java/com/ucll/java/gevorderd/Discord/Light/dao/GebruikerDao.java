@@ -15,4 +15,6 @@ public interface GebruikerDao extends JpaRepository<Gebruiker, Long> {
     List<Gebruiker> findAllByUsernameContains(String username);
 
     List<Gebruiker> findGebruikersByGeabonneerdeKanalenContains(Kanaal kanaal);
+
+    Gebruiker findGebruikerByGeabonneerdeKanalenContainsAndIdIs(Kanaal kanaal, long id);
 }

@@ -27,6 +27,10 @@ public class Gebruiker {
     @Column(name = "ACHTERNAAM")
     private String achternaam;
 
+    /*@OneToMany(cascade = {CascadeType.PERSIST})
+    @JoinColumn(name = "DISCORD_LIGHT.BERICHT_ID")
+    private Set<Bericht> berichten = new HashSet<>();*/
+
     @ManyToMany
     @JoinTable(
             schema = "DISCORD_LIGHT",
@@ -36,12 +40,7 @@ public class Gebruiker {
     )
     private Set<Kanaal> geabonneerdeKanalen = new HashSet<>();
 
-    @OneToMany
-    @JoinColumn(name = "DISCORD_LIGHT.BERICHT_ID")
-    private List<Bericht> berichten;
-
     public Gebruiker() {
-        setBerichten(new ArrayList<>());
     }
 
     public long getId() {
@@ -80,16 +79,15 @@ public class Gebruiker {
         geabonneerdeKanalen.add(kanaal);
     }
 
-    public List<Bericht> getBerichten() {
+    /*public Set<Bericht> getBerichten() {
         return berichten;
     }
 
-    public void setBerichten(List<Bericht> berichten) {
+    public void setBerichten(Set<Bericht> berichten) {
         this.berichten = berichten;
     }
 
     public void plaatsBericht(Bericht bericht){
-        if (berichten == null) berichten = new ArrayList<>();
         berichten.add(bericht);
-    }
+    }*/
 }
