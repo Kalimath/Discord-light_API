@@ -1,20 +1,20 @@
-package com.ucll.java.gevorderd.Discord.Light.dto;
+package com.ucll.java.gevorderd.Discord.Light.dto.berichten;
 
-import com.ucll.java.gevorderd.Discord.Light.domain.Gebruiker;
+import com.ucll.java.gevorderd.Discord.Light.dto.GebruikerDto;
 
 import java.time.LocalDateTime;
 
-public class BerichtDto {
+public class FullBerichtDto {
     private long id;
-    private long afzender;
+    private GebruikerDto afzender;
     private String bericht;
     private LocalDateTime dateTime;
 
-    public BerichtDto(long id, long afzender, String bericht, LocalDateTime dateTime) {
+    public FullBerichtDto(GebruikerDto afzender, String bericht, LocalDateTime dateTime) {
         setId(id);
-        setAfzender(afzender);
         setBericht(bericht);
         setDateTime(dateTime);
+        setAfzender(afzender);
     }
 
     public long getId() {
@@ -25,11 +25,11 @@ public class BerichtDto {
         this.id = id;
     }
 
-    public long getAfzender() {
+    public GebruikerDto getAfzender() {
         return afzender;
     }
 
-    public void setAfzender(long afzender) {
+    public void setAfzender(GebruikerDto afzender) {
         this.afzender = afzender;
     }
 
@@ -46,6 +46,6 @@ public class BerichtDto {
     }
 
     public void setDateTime(LocalDateTime dateTime) {
-            this.dateTime = dateTime;
+        this.dateTime = dateTime;
     }
 }

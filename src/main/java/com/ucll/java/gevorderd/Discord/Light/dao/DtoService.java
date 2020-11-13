@@ -7,11 +7,9 @@ import com.ucll.java.gevorderd.Discord.Light.dto.BerichtDto;
 import com.ucll.java.gevorderd.Discord.Light.dto.GebruikerDto;
 import com.ucll.java.gevorderd.Discord.Light.dto.KanaalDto;
 import com.ucll.java.gevorderd.Discord.Light.dto.PlaatsBerichtDto;
+import com.ucll.java.gevorderd.Discord.Light.dto.berichten.FullBerichtDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestParam;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -65,10 +63,11 @@ public class DtoService {
         return gebruikerDao.findGebruikersByGeabonneerdeKanalenContains(kanaalDao.getOne(kanaalId));
     }
 
-    public Bericht postMessageInChannel( long kanaalId, PlaatsBerichtDto berichtDto){
+    public BerichtDto postMessageInChannel( long kanaalId, PlaatsBerichtDto berichtDto){
         Bericht newBericht = toBericht(berichtDto);
+        newBericht.setVerzendDatum(LocalDateTime.now());
         kanaalDao.getOne(kanaalId).plaatsBericht(newBericht);
-        return berichtDao.save(newBericht);
+        return toBerichtDto(berichtDao.save(newBericht));
     }
 
     public GebruikerDto toGebruikerDto(Gebruiker gebruiker){
@@ -91,5 +90,13 @@ public class DtoService {
         return new Bericht(gebruikerDao.getOne(berichtDto.getAfzender()),
                             berichtDto.getBericht(),
                             berichtDto.getDateTime());
+    }
+
+    public BerichtDto toBerichtDto (Bericht b){
+        return new BerichtDto(b.getId(), b.getAfzender().getId(), b.getBericht(), b.getVerzendDatum());
+    }
+
+    public FullBerichtDto toFullBerichtDto (Bericht b){
+        return new FullBerichtDto(toGebruikerDto(b.getAfzender()), b.getBericht(), b.getVerzendDatum());
     }
 }

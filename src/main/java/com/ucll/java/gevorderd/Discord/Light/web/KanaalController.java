@@ -7,6 +7,7 @@ import com.ucll.java.gevorderd.Discord.Light.dao.KanaalDao;
 import com.ucll.java.gevorderd.Discord.Light.domain.Bericht;
 import com.ucll.java.gevorderd.Discord.Light.domain.Gebruiker;
 import com.ucll.java.gevorderd.Discord.Light.domain.Kanaal;
+import com.ucll.java.gevorderd.Discord.Light.dto.BerichtDto;
 import com.ucll.java.gevorderd.Discord.Light.dto.GebruikerDto;
 import com.ucll.java.gevorderd.Discord.Light.dto.KanaalDto;
 import com.ucll.java.gevorderd.Discord.Light.dto.PlaatsBerichtDto;
@@ -49,7 +50,7 @@ public class KanaalController {
     }
 
     @PostMapping("/{id}/berichten")
-    public Bericht plaatsBerichtInKanaal(@PathVariable("id") long kanaalId, @RequestBody PlaatsBerichtDto berichtDto){
+    public BerichtDto plaatsBerichtInKanaal(@PathVariable("id") long kanaalId, @RequestBody PlaatsBerichtDto berichtDto){
         return dtoService.postMessageInChannel(kanaalId, berichtDto);
     }
 }
