@@ -23,18 +23,35 @@ public class KanaalController {
     private final KanaalDao kanaalDao;
     private final BerichtDao berichtDao;
 
+    /**
+     * @param gebruikerDao
+     * @param kanaalDao
+     * @param berichtDao
+     * */
     public KanaalController(GebruikerDao gebruikerDao, KanaalDao kanaalDao, BerichtDao berichtDao) {
         this.gebruikerDao = gebruikerDao;
         this.kanaalDao = kanaalDao;
         this.berichtDao = berichtDao;
     }
 
+
+    /**
+     * @param kanaal
+     *
+     * @return
+     * */
     @PostMapping("")
     public KanaalDto voegKanaalToe(@RequestBody Kanaal kanaal){
         Kanaal temp = kanaalDao.save(kanaal);
         return new KanaalDto(temp.getId(), temp.getName(), temp.getTopic());
     }
 
+
+    /**
+     * @param topic
+     *
+     * @return
+     * */
     @GetMapping("")
     public List<KanaalDto> getAlleKanalen(@RequestParam("topic") String topic){
         List<Kanaal> kanalen = kanaalDao.findAllByTopicContains(topic);
@@ -45,21 +62,43 @@ public class KanaalController {
         return res;
     }
 
+
+    /**
+     * @param kanaalId
+     * @param gebruiker
+     *
+     * @return
+     * */
     @Transactional
     @PostMapping("/{id}/registraties")
-    public Gebruiker registreerGebruiker(@PathVariable("id") long kanaalId, @RequestBody Gebruiker gebruiker ){
+    public Gebruiker registreerGebruiker(@PathVariable("id") long kanaalId,
+                                         @RequestBody Gebruiker gebruiker ){
         gebruiker = gebruikerDao.getOne(gebruiker.getId());
         gebruiker.abonneerOpKanaal(kanaalDao.getOne(kanaalId));
         return gebruikerDao.save(gebruiker);
     }
 
+
+    /**
+     * @param kanaalId
+     *
+     * @return
+     * */
     @GetMapping("/{id}/registraties")
     public List<Gebruiker> getChannelMembers(@PathVariable("id") long kanaalId){
         return gebruikerDao.findGebruikersByGeabonneerdeKanalenContains(kanaalDao.getOne(kanaalId));
     }
 
+
+    /**
+     * @param kanaalId
+     * @param berichtDto
+     *
+     * @return
+     * */
     @PostMapping("/{id}/berichten")
-    public Bericht plaatsBerichtInKanaal(@PathVariable("id") long kanaalId, @RequestBody PlaatsBerichtDto berichtDto){
+    public Bericht plaatsBerichtInKanaal(@PathVariable("id") long kanaalId,
+                                         @RequestBody PlaatsBerichtDto berichtDto){
         Bericht newBericht = new Bericht();
         newBericht.setBericht(berichtDto.getBericht());
         newBericht.setAfzender(gebruikerDao.getOne(berichtDto.getAfzender()));

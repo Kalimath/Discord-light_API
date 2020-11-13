@@ -9,6 +9,7 @@ import org.springframework.stereotype.Repository;
 
 import java.util.HashMap;
 import java.util.List;
+
 @Repository("kanalenRepo")
 public interface KanaalDao extends JpaRepository<Kanaal, Long> {
 
