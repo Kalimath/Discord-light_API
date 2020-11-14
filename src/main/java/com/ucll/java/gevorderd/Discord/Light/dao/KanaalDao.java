@@ -16,6 +16,4 @@ public interface KanaalDao extends JpaRepository<Kanaal, Long> {
 
     List<Kanaal> findAllByTopicContains(String topic);
 
-    List<Bericht> findAllByIdIsAndBerichtenAAndBerichten_AndBerichten_Afzender_usernameContains()
-
 }

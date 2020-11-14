@@ -1,5 +1,7 @@
 package com.ucll.java.gevorderd.Discord.Light.domain;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 import javax.persistence.*;
 import java.time.LocalDateTime;
 
@@ -20,7 +22,8 @@ public class Bericht {
     private Gebruiker ontvanger;
 
     @Column(name = "BERICHT")
-    private String bericht;
+    @JsonProperty("bericht")
+    private String boodschap;
 
     @Column(name = "VERZENDDATUM")
     private LocalDateTime verzendDatum;
@@ -31,12 +34,12 @@ public class Bericht {
         //
     }
 
-    public Bericht(Gebruiker afzender,Gebruiker ontvanger, String bericht, LocalDateTime verzendDatum) {
+    public Bericht(Gebruiker afzender, Gebruiker ontvanger, String boodschap, LocalDateTime verzendDatum) {
 
         this.id = id;
         this.afzender = afzender;
         this.ontvanger = ontvanger;
-        this.bericht = bericht;
+        this.boodschap = boodschap;
         this.verzendDatum = verzendDatum;
     }
 
@@ -52,8 +55,8 @@ public class Bericht {
         return ontvanger;
     }
 
-    public String getBericht() {
-        return bericht;
+    public String getBoodschap() {
+        return boodschap;
     }
 
     public void setId(long id) {
@@ -68,8 +71,8 @@ public class Bericht {
         this.ontvanger = ontvanger;
     }
 
-    public void setBericht(String bericht) {
-        this.bericht = bericht;
+    public void setBoodschap(String bericht) {
+        this.boodschap = bericht;
     }
 
     public LocalDateTime getVerzendDatum() {

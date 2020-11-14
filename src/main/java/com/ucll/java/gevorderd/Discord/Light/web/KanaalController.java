@@ -9,6 +9,8 @@ import com.ucll.java.gevorderd.Discord.Light.dto.GebruikerDto;
 import com.ucll.java.gevorderd.Discord.Light.dto.KanaalDto;
 import com.ucll.java.gevorderd.Discord.Light.dto.PlaatsBerichtDto;
 import com.ucll.java.gevorderd.Discord.Light.dto.berichten.FullBerichtDto;
+import org.springframework.http.HttpRequest;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -19,7 +21,7 @@ import java.util.Optional;
 
 @RestController
 @RequestMapping("/kanalen")
-public class KanaalController {
+public class KanaalController extends RuntimeException {
 
     private DtoService dtoService;
 
@@ -39,8 +41,10 @@ public class KanaalController {
 
     @Transactional
     @PostMapping("/{id}/registraties")
-    public GebruikerDto registreerGebruiker(@PathVariable("id") long kanaalId, @RequestBody Gebruiker gebruiker ){
-        return dtoService.registerGebruiker(kanaalId,gebruiker);
+    @ResponseStatus(value = HttpStatus.CREATED)
+    public String registreerGebruiker(@PathVariable("id") long kanaalId, @RequestBody Gebruiker gebruiker ){
+        dtoService.registerGebruiker(kanaalId,gebruiker);
+        return "Created";
     }
 
     @GetMapping("/{id}/registraties")

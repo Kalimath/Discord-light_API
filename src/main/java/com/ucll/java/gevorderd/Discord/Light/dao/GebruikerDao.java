@@ -12,7 +12,7 @@ import java.util.List;
 public interface GebruikerDao extends JpaRepository<Gebruiker, Long> {
 
     //@Query("SELECT g FROM GEBRUIKER g WHERE g.USERNAME LIKE lower(concat('%', ?1,'%'))")
-    List<Gebruiker> findAllByUsernameContains(String username);
+    List<Gebruiker> findAllByUsernameContainsIgnoreCase(String username);
 
     List<Gebruiker> findGebruikersByGeabonneerdeKanalenContains(Kanaal kanaal);
 

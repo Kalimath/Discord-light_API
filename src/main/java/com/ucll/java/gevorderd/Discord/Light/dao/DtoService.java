@@ -14,7 +14,6 @@ import org.springframework.stereotype.Component;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 @Component
 public class DtoService {
@@ -36,7 +35,7 @@ public class DtoService {
     }
 
     public List<GebruikerDto> getAllGebruikers(String username){
-        return toGebruikerDtoList(gebruikerDao.findAllByUsernameContains(username));
+        return toGebruikerDtoList(gebruikerDao.findAllByUsernameContainsIgnoreCase(username));
     }
 
     public KanaalDto addKanaal(Kanaal kanaal){
@@ -91,10 +90,11 @@ public class DtoService {
         return newBerichten;
     }
 
-    public List<FullBerichtDto> getAllMessagesFromChannel(long id, String username, String bericht) {
+    public List<FullBerichtDto> getAllMessagesFromChannel(long id, String username, String content) {
         if(username==null||username.trim().isEmpty()) username = "";
-        if(bericht==null||bericht.trim().isEmpty()) bericht = "";
-        List<Bericht> berichten = berichtDao.findAllByIdIsAndAfzender_UsernameContainsAndBerichtContains(id, username, bericht);
+        if(content==null||content.trim().isEmpty()) content = "";
+        List<Bericht> berichten = getFilteredMessages(berichtDao.findBerichtsByAfzender_UsernameContainsIgnoreCaseAndBoodschapContainsIgnoreCase(username, content),
+                                                      kanaalDao.getOne(id).getBerichten());
         List<FullBerichtDto> newBerichten = new ArrayList<>();
         for (Bericht b: berichten) {
             newBerichten.add(toFullBerichtDto(b));
@@ -132,11 +132,25 @@ public class DtoService {
     }
 
     public BerichtDto toBerichtDto (Bericht b){
-        return new BerichtDto(b.getId(), b.getAfzender().getId(), b.getBericht(), b.getVerzendDatum());
+        return new BerichtDto(b.getId(), b.getAfzender().getId(), b.getBoodschap(), b.getVerzendDatum());
     }
 
     public FullBerichtDto toFullBerichtDto (Bericht b){
-        return new FullBerichtDto(b.getId(), toGebruikerDto(b.getAfzender()), b.getBericht(), b.getVerzendDatum());
+        return new FullBerichtDto(b.getId(), toGebruikerDto(b.getAfzender()), b.getBoodschap(), b.getVerzendDatum());
+    }
+
+    public List<Bericht> getFilteredMessages(List<Bericht> berichten, List<Bericht> berichtenInKanaal){
+        List<Bericht> result = new ArrayList<>();
+        for (Bericht b: berichten) {
+            for (Bericht bKanaal: berichtenInKanaal) {
+                if(b.getId() == bKanaal.getId()) {
+                    result.add(b);
+                    break;
+                }
+            }
+
+        }
+        return result;
     }
 
 

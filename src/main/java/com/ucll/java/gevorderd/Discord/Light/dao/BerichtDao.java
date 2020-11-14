@@ -11,5 +11,5 @@ public interface BerichtDao extends JpaRepository<Bericht, Long> {
 
     List<Bericht> findBerichtsByOntvanger_Id(long id);
 
-    List<Bericht> findAllByIdIsAndAfzender_UsernameContainsAndBerichtContains(long id, String username, String bericht);
+    List<Bericht> findBerichtsByAfzender_UsernameContainsIgnoreCaseAndBoodschapContainsIgnoreCase(String username, String content);
 }
