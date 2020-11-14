@@ -30,6 +30,7 @@ public class KanaalController extends RuntimeException {
     }
 
     @PostMapping("")
+    @ResponseStatus(value = HttpStatus.CREATED)
     public KanaalDto voegKanaalToe(@RequestBody Kanaal kanaal){
         return dtoService.addKanaal(kanaal);
     }
@@ -53,6 +54,7 @@ public class KanaalController extends RuntimeException {
     }
 
     @PostMapping("/{id}/berichten")
+    @ResponseStatus(value = HttpStatus.CREATED)
     public Object plaatsBerichtInKanaal(@PathVariable("id") long kanaalId, @RequestBody PlaatsBerichtDto berichtDto){
         BerichtDto entity = null;
         String error = "";

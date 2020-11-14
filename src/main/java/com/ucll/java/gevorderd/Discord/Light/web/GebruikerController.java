@@ -8,6 +8,7 @@ import com.ucll.java.gevorderd.Discord.Light.dto.BerichtDto;
 import com.ucll.java.gevorderd.Discord.Light.dto.GebruikerDto;
 import com.ucll.java.gevorderd.Discord.Light.dto.PlaatsBerichtDto;
 import com.ucll.java.gevorderd.Discord.Light.dto.berichten.FullBerichtDto;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 import javax.transaction.Transactional;
@@ -28,6 +29,7 @@ public class GebruikerController {
 
 
     @PostMapping("")
+    @ResponseStatus(value = HttpStatus.CREATED)
     public GebruikerDto voegGebruikerToe(@RequestBody Gebruiker gebruiker) {
         return dtoService.addGebruiker(gebruiker);
     }
@@ -39,6 +41,7 @@ public class GebruikerController {
 
 
     @PostMapping("/{id}/berichten")
+    @ResponseStatus(value = HttpStatus.CREATED)
     public BerichtDto stuurBerichtNaarGebruiker(@PathVariable("id") long ontvangerId, @RequestBody PlaatsBerichtDto berichtDto){
         return dtoService.sendMessageToUser(ontvangerId, berichtDto);
     }
@@ -47,8 +50,6 @@ public class GebruikerController {
     public List<FullBerichtDto> getAlleBerichtenVanGebruiker(@PathVariable("id") long id){
         return dtoService.getAllMessagesFromUser(id);
     }
-
-
 
 
 }
