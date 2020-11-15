@@ -1,7 +1,5 @@
 package com.ucll.java.gevorderd.Discord.Light.dto;
 
-import com.ucll.java.gevorderd.Discord.Light.domain.Gebruiker;
-
 import java.time.LocalDateTime;
 
 public class BerichtDto {
@@ -14,7 +12,7 @@ public class BerichtDto {
         setId(id);
         setAfzender(afzender);
         setBericht(bericht);
-        setDateTime(verzendDatum);
+        setVerzendDatum(verzendDatum);
     }
 
     public long getId() {
@@ -41,11 +39,11 @@ public class BerichtDto {
         this.bericht = bericht;
     }
 
-    public LocalDateTime getDateTime() {
+    public LocalDateTime getVerzendDatum() {
         return verzendDatum;
     }
 
-    public void setDateTime(LocalDateTime verzendDatum) {
+    public void setVerzendDatum(LocalDateTime verzendDatum) {
             this.verzendDatum = verzendDatum;
     }
 }

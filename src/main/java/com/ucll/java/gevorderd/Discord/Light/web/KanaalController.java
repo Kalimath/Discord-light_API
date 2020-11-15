@@ -19,6 +19,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+import static org.springframework.http.HttpStatus.FORBIDDEN;
+
 @RestController
 @RequestMapping("/kanalen")
 public class KanaalController extends RuntimeException {
@@ -40,7 +42,6 @@ public class KanaalController extends RuntimeException {
         return dtoService.getAllKanalen(topic);
     }
 
-    @Transactional
     @PostMapping("/{id}/registraties")
     @ResponseStatus(value = HttpStatus.CREATED)
     public String registreerGebruiker(@PathVariable("id") long kanaalId, @RequestBody Gebruiker gebruiker ){
@@ -54,8 +55,7 @@ public class KanaalController extends RuntimeException {
     }
 
     @PostMapping("/{id}/berichten")
-    @ResponseStatus(value = HttpStatus.CREATED)
-    public Object plaatsBerichtInKanaal(@PathVariable("id") long kanaalId, @RequestBody PlaatsBerichtDto berichtDto){
+    public ResponseEntity plaatsBerichtInKanaal(@PathVariable("id") long kanaalId, @RequestBody PlaatsBerichtDto berichtDto){
         BerichtDto entity = null;
         String error = "";
         boolean errorFree = true;
@@ -66,9 +66,9 @@ public class KanaalController extends RuntimeException {
             error = e.getMessage();
         }
         if(errorFree){
-            return entity;
+            return new ResponseEntity<>(entity,HttpStatus.CREATED);
         }else{
-            return error;
+            return new ResponseEntity<>(error, FORBIDDEN);
         }
     }
 
