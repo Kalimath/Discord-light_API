@@ -10,11 +10,11 @@ public class BerichtDto {
     private String bericht;
     private LocalDateTime verzendDatum;
 
-    public BerichtDto(long id, long afzender, String bericht, LocalDateTime dateTime) {
+    public BerichtDto(long id, long afzender, String bericht, LocalDateTime verzendDatum) {
         setId(id);
         setAfzender(afzender);
         setBericht(bericht);
-        setDateTime(dateTime);
+        setDateTime(verzendDatum);
     }
 
     public long getId() {
@@ -45,7 +45,7 @@ public class BerichtDto {
         return verzendDatum;
     }
 
-    public void setDateTime(LocalDateTime dateTime) {
-            this.verzendDatum = dateTime;
+    public void setDateTime(LocalDateTime verzendDatum) {
+            this.verzendDatum = verzendDatum;
     }
 }

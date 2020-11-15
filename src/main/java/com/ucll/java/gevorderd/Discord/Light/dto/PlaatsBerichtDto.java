@@ -5,7 +5,7 @@ import java.time.LocalDateTime;
 public class PlaatsBerichtDto {
     private long afzender;
     private String bericht;
-    private LocalDateTime dateTime;
+    private LocalDateTime verzendDatum;
 
     public long getAfzender() {
         return afzender;
@@ -23,15 +23,15 @@ public class PlaatsBerichtDto {
         this.bericht = bericht;
     }
 
-    public LocalDateTime getDateTime() {
-        return dateTime;
+    public LocalDateTime getVerzendDatum() {
+        return verzendDatum;
     }
 
-    public void setDateTime(LocalDateTime dateTime) {
-        if(dateTime == null){
-            dateTime = LocalDateTime.now();
+    public void setVerzendDatum(LocalDateTime verzendDatum) {
+        if(verzendDatum == null){
+            verzendDatum = LocalDateTime.now();
         }else{
-            this.dateTime = dateTime;
+            this.verzendDatum = verzendDatum;
         }
     }
 }

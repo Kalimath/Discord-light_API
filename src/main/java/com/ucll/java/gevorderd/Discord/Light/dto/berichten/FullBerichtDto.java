@@ -10,10 +10,10 @@ public class FullBerichtDto {
     private String bericht;
     private LocalDateTime verzendDatum;
 
-    public FullBerichtDto(long id, GebruikerDto afzender, String bericht, LocalDateTime dateTime) {
+    public FullBerichtDto(long id, GebruikerDto afzender, String bericht, LocalDateTime verzendDatum) {
         setId(id);
         setBericht(bericht);
-        setVerzendDatum(dateTime);
+        setVerzendDatum(verzendDatum);
         setAfzender(afzender);
     }
 

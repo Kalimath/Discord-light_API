@@ -123,12 +123,12 @@ public class DtoService {
         return new Bericht(gebruikerDao.getOne(berichtDto.getAfzender()),
                            gebruikerDao.getOne(ontvangerId),
                             berichtDto.getBericht(),
-                            berichtDto.getDateTime());
+                            berichtDto.getVerzendDatum());
     }
 
     public Bericht toBerichtKanaal(PlaatsBerichtDto berichtDto){
         return new Bericht(gebruikerDao.getOne(berichtDto.getAfzender()),
-                null, berichtDto.getBericht(), berichtDto.getDateTime());
+                null, berichtDto.getBericht(), berichtDto.getVerzendDatum());
     }
 
     public BerichtDto toBerichtDto (Bericht b){
